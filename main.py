@@ -17,15 +17,14 @@ def parse_comments(reddit, found_comments):
         if sys.argv[1] in comment.body and comment.id not in found_comments:
             print("Found " + sys.argv[1] + " in comment with ID " + comment.id + " written by /u/" + str(comment.author) + ".")
             found_comments.append(comment.id)
-            #todo: figure out how to get the name of the comment author
-            #this doesn't seem to be possible at first glance? what?
             #comment.reply("")
 
 if __name__ == '__main__':
     if check_args():
         reddit = login()
-        print("Logged in as /u/" + str(reddit.user.me()) + ". Starting to parse comments in /r/" + sys.argv[2] + "...")
+        print("Logged in as /u/" + str(reddit.user.me()) + "! Starting to parse comments in /r/" + sys.argv[2] + "...")
         found_comments = []
         # while True:
         parse_comments(reddit, found_comments)
         #time.sleep(10)
+        print(found_comments)
