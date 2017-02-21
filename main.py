@@ -1,5 +1,5 @@
 import praw
-import sys#, time
+import sys, os#, time
 
 def check_args():
     if len(sys.argv) < 2:
@@ -17,13 +17,27 @@ def parse_comments(reddit, found_comments):
         if sys.argv[1] in comment.body and comment.id not in found_comments:
             print("Found " + sys.argv[1] + " in comment with ID " + comment.id + " written by /u/" + str(comment.author) + ".")
             found_comments.append(comment.id)
+
             #comment.reply("")
+            with open("comments_replied_to.txt", "a") as f:
+                f.write(comment.id + "\n")
+
+def already_replied_comments():
+    if not os.path.isfile("comments_replied_to.txt"):
+        found_comments = []
+    else:
+        with open("comments_replied_to.txt", "r") as f:
+            found_comments = f.read()
+            found_comments = found_comments.split("\n")
+        return found_comments
 
 if __name__ == '__main__':
     if check_args():
         reddit = login()
         print("Logged in as /u/" + str(reddit.user.me()) + "! Starting to parse comments in /r/" + sys.argv[2] + "...")
-        found_comments = []
+        
+        found_comments = already_replied_comments()
+
         # while True:
         parse_comments(reddit, found_comments)
         #time.sleep(10)
