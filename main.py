@@ -17,7 +17,7 @@ def login():
 
 def parse_comments(reddit, found_comments):
     for comment in reddit.subreddit(sys.argv[2]).comments(limit=25):
-        if sys.argv[1] in comment.body and comment.id not in found_comments:
+        if sys.argv[1] in comment.body.lower() and comment.id not in found_comments:
             print("Found " + sys.argv[1] + " in comment with ID " + comment.id + " written by /u/" + str(comment.author) + ".")
             found_comments.append(comment.id)
 
@@ -35,9 +35,9 @@ def already_replied_comments():
     return found_comments
 
 def get_cowsay():
-    comment = "Regardless of your current choice of OS, you will always be welcome under my wings."
-    comment = requests.get("https://helloacm.com/api/cowsay/?msg=" + comment + "&f=tux").json()
-    return comment
+    sentence = "Regardless of your current choice of OS, you will always be welcome under my wings."
+    tux_say = requests.get("https://helloacm.com/api/cowsay/?msg=" + sentence + "&f=tux").json()
+    return tux_say
 
 if __name__ == '__main__':
     if check_args():
