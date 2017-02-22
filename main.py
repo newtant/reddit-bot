@@ -20,8 +20,8 @@ def parse_comments(reddit, found_comments):
         if sys.argv[1] in comment.body.lower() and comment.id not in found_comments:
             print("Found " + sys.argv[1] + " in comment with ID " + comment.id + " written by /u/" + str(comment.author) + ".")
             found_comments.append(comment.id)
-
-            #comment.reply("")
+            comment.reply(get_cowsay())
+            print("Replied successfully!")
             with open("comments_replied_to.txt", "a") as f:
                 f.write(comment.id + "\n")
 
