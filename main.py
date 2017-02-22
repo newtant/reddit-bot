@@ -1,5 +1,8 @@
 import praw
-import sys, os#, time
+import sys
+import os
+import time
+import requests
 
 def check_args():
     if len(sys.argv) < 2:
@@ -30,6 +33,11 @@ def already_replied_comments():
             found_comments = f.read()
             found_comments = found_comments.split("\n")
         return found_comments
+
+def get_cowsay():
+    comment = "Regardless of your current choice of OS, you will always be welcome under my wings."
+    comment = requests.get("https://helloacm.com/api/cowsay/?msg=" + comment + "&f=tux").json()
+    return comment
 
 if __name__ == '__main__':
     if check_args():
