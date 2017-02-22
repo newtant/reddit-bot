@@ -16,7 +16,7 @@ def login():
     return praw.Reddit('tuxBot', user_agent = "A bot that parses new comments in a subreddit for mentions of \'Linux\' and welcomes them -- v0.1.")
 
 def parse_comments(reddit, found_comments):
-    for comment in reddit.subreddit(sys.argv[2]).comments(limit=25):
+    for comment in reddit.subreddit(sys.argv[1]).comments(limit=25):
         if "linux" in comment.body.lower() and comment.id not in found_comments:
             print("Found \'linux\' in comment with ID " + comment.id + " written by /u/" + str(comment.author) + ".")
             found_comments.append(comment.id)
