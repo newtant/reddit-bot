@@ -58,4 +58,4 @@ if __name__ == '__main__':
         while True:
             parse_comments(reddit, found_comments)
             print(found_comments)
-            time.sleep(30)
+            time.sleep(10)
