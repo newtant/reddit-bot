@@ -32,7 +32,7 @@ def already_replied_comments():
         with open("comments_replied_to.txt", "r") as f:
             found_comments = f.read()
             found_comments = found_comments.split("\n")
-        return found_comments
+    return found_comments
 
 def get_cowsay():
     comment = "Regardless of your current choice of OS, you will always be welcome under my wings."
