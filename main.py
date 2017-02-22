@@ -46,7 +46,7 @@ if __name__ == '__main__':
         
         found_comments = already_replied_comments()
 
-        # while True:
-        parse_comments(reddit, found_comments)
-        #time.sleep(10)
-        print(found_comments)
+        while True:
+            parse_comments(reddit, found_comments)
+            print(found_comments)
+            time.sleep(10)
