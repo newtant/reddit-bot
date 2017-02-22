@@ -20,7 +20,7 @@ def parse_comments(reddit, found_comments):
         if sys.argv[1] in comment.body.lower() and comment.id not in found_comments:
             print("Found " + sys.argv[1] + " in comment with ID " + comment.id + " written by /u/" + str(comment.author) + ".")
             found_comments.append(comment.id)
-            comment.reply(get_cowsay())
+            comment.reply(get_tuxsay())
             print("Replied successfully!")
             with open("comments_replied_to.txt", "a") as f:
                 f.write(comment.id + "\n")
@@ -34,10 +34,14 @@ def already_replied_comments():
             found_comments = found_comments.split("\n")
     return found_comments
 
-def get_cowsay():
+def get_tuxsay():
     sentence = "Regardless of your current choice of OS, you will always be welcome under my wings."
     tux_say = requests.get("https://helloacm.com/api/cowsay/?msg=" + sentence + "&f=tux").json()
-    return tux_say
+    tux_say = tux_say.split("\n")
+    reply = ""
+    for line in tux_say:
+        reply += "    " + line + "\n"
+    return reply
 
 if __name__ == '__main__':
     if check_args():
