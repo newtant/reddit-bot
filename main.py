@@ -4,6 +4,7 @@ import os
 import time
 import requests
 
+
 def check_args():
     if len(sys.argv) != 2:
         print("Usage: python main.py $subredditName")
@@ -11,9 +12,13 @@ def check_args():
     else:
         return True
 
+
 def authenticate():
     print("Authenticating...")
-    return praw.Reddit('tuxBot', user_agent = "A bot that parses new comments in a subreddit for mentions of \'Linux\' and welcomes them -- v0.1.")
+    return praw.Reddit(
+        'tuxBot',
+        user_agent = "A bot that parses new comments in a subreddit for mentions of \'Linux\' and welcomes them -- v0.1.")
+
 
 def parse_comments(reddit, found_comments):
     for comment in reddit.subreddit(sys.argv[1]).comments(limit=25):
@@ -27,7 +32,8 @@ def parse_comments(reddit, found_comments):
             with open("comments_replied_to.txt", "a") as f:
                 f.write(comment.id + "\n")
 
-def already_replied_comments():
+
+def get_already_replied_comments():
     if not os.path.isfile("comments_replied_to.txt"):
         found_comments = []
     else:
@@ -36,6 +42,7 @@ def already_replied_comments():
             found_comments = found_comments.split("\n")
 
     return found_comments
+
 
 def get_tuxsay():
     sentence = "Regardless of your current choice of OS, you will always be welcome under my wings."
@@ -48,16 +55,18 @@ def get_tuxsay():
 
     return reply
 
+
 def main():    
     reddit = authenticate()
     print("Authenticated as /u/" + str(reddit.user.me()) + "! Starting to parse comments in /r/" + sys.argv[1] + "...")
 
-    found_comments = already_replied_comments()
+    found_comments = get_already_replied_comments()
 
     while True:
         parse_comments(reddit, found_comments)
         print(found_comments)
         time.sleep(10)
+
 
 if __name__ == '__main__':
     if check_args():
