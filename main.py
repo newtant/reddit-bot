@@ -11,8 +11,8 @@ def check_args():
     else:
         return True
 
-def login():
-    print("Logging in...")
+def authenticate():
+    print("Authenticating...")
     return praw.Reddit('tuxBot', user_agent = "A bot that parses new comments in a subreddit for mentions of \'Linux\' and welcomes them -- v0.1.")
 
 def parse_comments(reddit, found_comments):
@@ -48,14 +48,17 @@ def get_tuxsay():
 
     return reply
 
+def main():    
+    reddit = authenticate()
+    print("Authenticated as /u/" + str(reddit.user.me()) + "! Starting to parse comments in /r/" + sys.argv[1] + "...")
+
+    found_comments = already_replied_comments()
+
+    while True:
+        parse_comments(reddit, found_comments)
+        print(found_comments)
+        time.sleep(10)
+
 if __name__ == '__main__':
     if check_args():
-        reddit = login()
-        print("Logged in as /u/" + str(reddit.user.me()) + "! Starting to parse comments in /r/" + sys.argv[1] + "...")
-
-        found_comments = already_replied_comments()
-
-        while True:
-            parse_comments(reddit, found_comments)
-            print(found_comments)
-            time.sleep(10)
+        main()
